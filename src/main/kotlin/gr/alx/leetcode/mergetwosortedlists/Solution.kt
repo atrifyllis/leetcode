@@ -19,7 +19,7 @@ class ListNode(var `val`: Int) {
 
 class Solution {
 
-    fun mergeTwoLists(list1: ListNode?, list2: ListNode?): ListNode? {
+    fun mergeTwoListsHack(list1: ListNode?, list2: ListNode?): ListNode? {
         var sortedElements = listOf<Int>()
         list1?.let {
             sortedElements = sortedElements.plus(list1.flatElements())
@@ -28,6 +28,41 @@ class Solution {
             sortedElements = sortedElements.plus(list2.flatElements())
         }
         return of(sortedElements.sorted())
+    }
+
+    fun mergeTwoLists(list1: ListNode?, list2: ListNode?): ListNode? {
+
+        var l1 = list1
+        var l2 = list2
+        val tempNode = ListNode(0)
+        var currentNode = tempNode
+
+        while (l1 != null && l2 != null) {
+
+
+            if (l1.value() < l2.value()) {
+                currentNode.next = l1
+                l1 = l1.next
+            } else {
+                currentNode.next = l2
+                l2 = l2.next
+            }
+
+
+            currentNode = currentNode.next!!
+        }
+
+        if (l1 != null) {
+            currentNode.next = l1
+            l1 = l1.next
+        }
+        if (l2 != null) {
+            currentNode.next = l2
+            l2 = l2.next
+
+        }
+
+        return tempNode.next
     }
 
     companion object {
